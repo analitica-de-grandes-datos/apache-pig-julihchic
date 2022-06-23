@@ -12,3 +12,14 @@ $ pig -x local -f pregunta.pig
 
      >>> Escriba el codigo del mapper a partir de este punto <<<
 */
+
+drivers =  LOAD 'data.tsv' USING PigStorage(',')
+    AS (
+            letra:chararray,
+            fecha:chararray,
+            num:int,
+    );
+
+ordered_data = ORDER drivers BY letra, num asc;
+
+STORE ordered_data INTO 'output/' USING PigStorage(',');
