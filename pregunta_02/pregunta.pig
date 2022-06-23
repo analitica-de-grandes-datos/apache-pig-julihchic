@@ -20,6 +20,6 @@ drivers =  LOAD 'data.tsv' USING PigStorage(',')
             num:int,
     );
 
-ordered_data = ORDER drivers BY letra, num asc;
+ordered_data = ORDER drivers BY letra, num;
 
 STORE ordered_data INTO 'output/' USING PigStorage(',');
