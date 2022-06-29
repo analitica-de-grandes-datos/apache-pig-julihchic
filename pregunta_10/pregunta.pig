@@ -20,7 +20,15 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data = LOAD './data.csv' USING PigStorage(',') AS (num: int, name: CHARARRAY,lastname: CHARARRAY date: DATETIME, color:CHARARRAY, cont:int);
+data = LOAD 'data.csv' USING PigStorage(',') 
+  AS (
+    num: int, 
+    name: CHARARRAY,
+    lastname: CHARARRAY 
+    date: DATETIME, 
+    color:CHARARRAY, 
+    cont:int
+    );
 column = FOREACH data GENERATE lastname, SIZE (lastname) AS tmn;
 ordered_col = ORDER column BY tmn desc, lastname;
 result = LIMIT ordered_col 5;
