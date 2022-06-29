@@ -16,6 +16,6 @@ data = LOAD 'data.tsv' USING PigStorage(',') AS (ltr1:CHARARRAY, ltr2:BAG{dict:T
 columns = FOREACH data GENERATE ltr2;
 words = FOREACH columns GENERATE FLATTEN(ltr2) AS word;
 grouped_words = GROUP words BY word;
-wordcount =  FOREACH grouped_words GENERATE group, COUNT(words);
+wordcount =  FOREACH grouped_words GENERATE group, COUNT(words); 
 
 STORE wordcount INTO 'output/' USING PigStorage(','); 
