@@ -18,4 +18,4 @@ words = FOREACH columns GENERATE FLATTEN(ltr2) AS word;
 grouped_words = GROUP words BY word;
 wordcount =  FOREACH grouped_words GENERATE group, COUNT(words);
 
-STORE wordcount INTO 'output/' USING PigStorage(',');
+STORE wordcount INTO 'output/' USING PigStorage(','); 
