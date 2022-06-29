@@ -33,4 +33,4 @@ limite = LIMIT data 10;
 result = FOREACH limite GENERATE driverId, truckId,eventTime;
 ordered_data = ORDER result BY driverId, truckId,eventTime;
 
-STORE ordered_data INTO 'output/' USING PigStorage(',');
+STORE ordered_data INTO 'output/' USING PigStorage(','); 
