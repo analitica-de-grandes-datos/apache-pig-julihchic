@@ -29,8 +29,8 @@ $ pig -x local -f pregunta.pig
          >>> Escriba su respuesta a partir de este punto <<<
 */
 data = LOAD 'data.csv' AS (driverId:int, truckId:int, eventTime:STRING, eventType:STRING, longitude:DOUBLE, latitude:DOUBLE, eventKey: STRING,correlationId:STRING, driverName:STRING, routeId:BIGINT, routeName:STRING, eventDate:STRING);
-mostrar = SELECT c FROM data LIMIT 10 ORDER data BY driverId, truckId,eventTime;
-limite = LIMIT  mostrar 10;
+limite = LIMIT data 10;
 result = FOREACH limite GENERATE driverId, truckId,eventTime;
+ordered_data = ORDER result BY driverId, truckId,eventTime;
 
-STORE mostrar INTO 'output/' USING PigStorage(',');
+STORE ordered_data INTO 'output/' USING PigStorage(',');
