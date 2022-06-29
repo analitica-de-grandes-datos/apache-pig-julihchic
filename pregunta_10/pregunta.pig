@@ -20,18 +20,18 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data = LOAD 'data.csv' USING PigStorage(',') 
-  AS (
-    num: int, 
-    name: CHARARRAY,
-    lastname: CHARARRAY 
-    date: DATETIME, 
-    color:CHARARRAY, 
-    cont:int
+data_table = LOAD 'data.csv' USING PigStorage(',')
+    AS (
+        Num:int,
+        Name:chararray,
+        Last:chararray,
+        Date:datetime,
+        Color:chararray,
+        Cant:int
     );
-column = FOREACH data GENERATE lastname, SIZE (lastname) AS tmn;
-ordered_col = ORDER column BY tmn desc, lastname;
-result = LIMIT ordered_col 5;
 
-STORE result INTO 'output/' USING PigStorage(',');
+column_last = FOREACH data_table GENERATE Last , SIZE(Last) AS tmn;
+order_columns = ORDER column_last BY tmn desc, Last;
+result = LIMIT order_columns 5;
+STORE result INTO 'output' USING PigStorage(',');
 
