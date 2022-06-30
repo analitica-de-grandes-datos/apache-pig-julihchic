@@ -18,4 +18,4 @@ cant = FOREACH data GENERATE SUBSTRING(date, 0, 4) AS yearBirthday;
 agrupa = GROUP cant BY yearBirthday;
 result = FOREACH agrupa GENERATE $0, COUNT($1);
 
-STORE result INTO 'output/' using PigStorage(',')
+STORE result INTO 'output/' using PigStorage(',');
