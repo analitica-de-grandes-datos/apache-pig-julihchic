@@ -23,14 +23,14 @@ $ pig -x local -f pregunta.pig
 data = LOAD 'data.csv' USING PigStorage(',')
     AS (
         Num:int,
-        Firstname:chararray,
+        Name:chararray,
         Last:chararray,
-        Date:datetime,
+        Date:chararray,
         Color:chararray,
         Cant:int
     );
 col = FOREACH data GENERATE Firstname, Color;
-filtro = FILTER col BY Color == 'blue' OR STARTSWITH(Firstname, 'K');
-result = FOREACH filtro GENERATE CONCAT(Firstname, ' ', Color);
+filtro = FILTER col BY (Name matches 'K.*') OR (Color matches 'blue');
+result = FOREACH filtro GENERATE Name, Color);
 
 STORE result INTO 'output' USING PigStorage(',');
