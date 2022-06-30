@@ -20,4 +20,17 @@ $ pig -x local -f pregunta.pig
 
         /* >>> Escriba su respuesta a partir de este punto <<< */
 */
+data = LOAD 'data.csv' USING PigStorage(',')
+    AS (
+        id:int,
+        firstname:chararray,
+        lastname:chararray,
+        date:datetime,
+        color:chararray,
+        cant:int
+    );
+col = FOREACH data GENERATE fFirstname, color;
+filtro = FILTER col BY (color not matches 'blue') or (color not matches 'black');
+result = FOREACH filtro GENERATE firstname, color;
 
+STORE result INTO 'output' USING PigStorage(',');
