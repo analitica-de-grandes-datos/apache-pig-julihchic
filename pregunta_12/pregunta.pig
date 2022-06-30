@@ -26,7 +26,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data = LOAD 'data.csv' USING PigStorage(',')
+data = LOAD './data.csv' USING PigStorage(',')
     AS (
         Num:int,
         Name:chararray,
@@ -36,7 +36,7 @@ data = LOAD 'data.csv' USING PigStorage(',')
         Cant:int
     );
 
-filtro = FILTER data BY Last MATCHES [D-K];
+filtro = FILTER data BY Last MATCHES '[D-K].*';
 result = FOREACH filtro GENERATE Last;
 
 STORE result INTO 'output' USING PigStorage(',');
