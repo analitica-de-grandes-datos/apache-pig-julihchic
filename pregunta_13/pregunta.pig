@@ -27,11 +27,12 @@ data = LOAD 'data.csv' USING PigStorage(',')
         Name:chararray,
         Last:chararray,
         Date:chararray,
-        Color:chararray,
+        color:chararray,
         Cant:int
     );
-col = FOREACH data GENERATE Color;
+col = FOREACH data GENERATE color;
 result = FILTER col BY ($0 MATCHES '.*b.*');
+
 DUMP col;
 
 STORE result INTO 'output' USING PigStorage(',');
