@@ -33,15 +33,8 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data = LOAD 'data.csv' using PigStorage(',') AS (id:int,  name:chararray, lastname:chararray,   date:chararray,  color:chararray, nm:int);
-A = FOREACH data GENERATE date , ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'dd'), ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'d'), ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'EEEE');
-B = FOREACH A GENERATE $0, REPLACE ($3, 'Monday', 'lunes'), $1, $2;
-C = FOREACH B GENERATE $0, REPLACE ($1, 'Tuesday', 'martes'), $2, $3;
-D = FOREACH C GENERATE $0, REPLACE ($1, 'Wednesday', 'miercoles'), $2, $3;
-E = FOREACH D GENERATE $0, REPLACE ($1, 'Thursday', 'jueves'), $2, $3;
-F = FOREACH E GENERATE $0, REPLACE ($1, 'Friday', 'viernes'), $2, $3;
-G = FOREACH F GENERATE $0, REPLACE ($1, 'Saturday', 'sabado'), $2, $3;
-H = FOREACH G GENERATE $0, REPLACE ($1, 'Sunday', 'domingo'), $2, $3;
-I = FOREACH G GENERATE $0, $2, $3, SUBSTRING($1, 0, 3), $1;
+data = LOAD 'data.csv' USING PigStorage(',') AS (f1:int, f2:chararray, f3:chararray, f4:datetime, f5:chararray, f6:int);
 
-STORE I INTO 'output/' using PigStorage(',');
+fech = FOREACH data GENERATE f4, ToString(f4, 'yyyy-MM-dd') AS fecha;
+result = FOREACH fech GENERATE fecha, SUBSTRING (fecha, 8, 10), SUBSTRING (fecha, 8, 10) AS (dia:int), REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(LOWER (ToString(f4, 'EEE')), 'mon', 'lun' ), 'tue','mar'), 'wed','mie'),'thu','jue'),'fri','vie'),'sun','dom'),REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(LOWER (ToString(f4, 'EEEE')), 'monday', 'lunes' ), 'tuesday','martes'), 'wednesday','miercoles'),'thursday','jueves'),'friday','viernes'),'sunday','domingo');
+STORE result INTO 'output' USING PigStorage(',');
