@@ -43,4 +43,5 @@ F = FOREACH E GENERATE $0, REPLACE ($1, 'Friday', 'viernes'), $2, $3;
 G = FOREACH F GENERATE $0, REPLACE ($1, 'Saturday', 'sabado'), $2, $3;
 H = FOREACH G GENERATE $0, REPLACE ($1, 'Sunday', 'domingo'), $2, $3;
 I = FOREACH G GENERATE $0, $2, $3, SUBSTRING($1, 0, 3), $1;
+
 STORE I INTO 'output/' using PigStorage(',');
