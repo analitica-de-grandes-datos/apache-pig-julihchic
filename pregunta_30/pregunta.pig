@@ -33,7 +33,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data = LOAD './data.csv' using PigStorage(',') AS (id:int,  name:chararray, lastname:chararray,   date:chararray,  color:chararray, other:int);
+data = LOAD 'data.csv' using PigStorage(',') AS (id:int,  name:chararray, lastname:chararray,   date:chararray,  color:chararray, nm:int);
 A = FOREACH data GENERATE date , ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'dd'), ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'d'), ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'EEEE');
 B = FOREACH A GENERATE $0, REPLACE ($3, 'Monday', 'lunes'), $1, $2;
 C = FOREACH B GENERATE $0, REPLACE ($1, 'Tuesday', 'martes'), $2, $3;
