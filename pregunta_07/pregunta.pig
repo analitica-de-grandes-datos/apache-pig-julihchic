@@ -14,3 +14,9 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
+data = LOAD 'data.tsv' AS (ltr1:CHARARRAY, tuplaltr:bag{}, arrayltr:map[]);
+columns = FOREACH data GENERATE ltr1, (int)COUNT (tuplaltr) AS Col2, (int) SIZE (arrayltr) AS Col3;
+result = ORDER columns BY ltr1, Col2, Col3;
+ 
+
+STORE result INTO 'output/' USING PigStorage(',');
