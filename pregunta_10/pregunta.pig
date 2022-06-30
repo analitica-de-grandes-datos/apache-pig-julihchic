@@ -20,7 +20,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data_table = LOAD 'data.csv' USING PigStorage(',')
+data = LOAD 'data.csv' USING PigStorage(',')
     AS (
         Num:int,
         Name:chararray,
@@ -30,7 +30,7 @@ data_table = LOAD 'data.csv' USING PigStorage(',')
         Cant:int
     );
 
-column_last = FOREACH data_table GENERATE Last , SIZE(Last) AS tmn;
+column_last = FOREACH data GENERATE Last , SIZE(Last) AS tmn;
 order_columns = ORDER column_last BY tmn desc, Last;
 result = LIMIT order_columns 5;
 STORE result INTO 'output' USING PigStorage(',');
