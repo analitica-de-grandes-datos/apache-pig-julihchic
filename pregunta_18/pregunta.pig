@@ -28,8 +28,8 @@ data = LOAD 'data.csv' USING PigStorage(',')
         color:chararray,
         cant:int
     );
-col = FOREACH data GENERATE fFirstname, color;
-filtro = FILTER col BY (color not matches 'blue') or (color not matches 'black');
-result = FOREACH filtro GENERATE firstname, color;
+col = FOREACH data GENERATE firstname, color;
+filtro = FILTER col BY NOT (color not '.*b.*');
+DUMP col
 
-STORE result INTO 'output' USING PigStorage(',');
+STORE filtro INTO 'output' USING PigStorage(',');
