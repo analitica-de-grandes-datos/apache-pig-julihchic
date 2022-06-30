@@ -19,6 +19,7 @@ evaluación, pig sera eejcutado ejecutado en modo local:
 $ pig -x local -f pregunta.pig
 
         /* >>> Escriba su respuesta a partir de este punto <<< */
+
 data = LOAD 'data.csv' USING PigStorage(',')
     AS (
         id:int,
@@ -30,6 +31,6 @@ data = LOAD 'data.csv' USING PigStorage(',')
     );
 col = FOREACH data GENERATE firstname, color;
 filtro = FILTER col BY NOT (color not '.*b.*');
-DUMP col
+DUMP col;
 
 STORE filtro INTO 'output' USING PigStorage(',');
