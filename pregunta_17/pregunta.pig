@@ -29,7 +29,7 @@ data = LOAD 'data.csv' USING PigStorage(',')
         cant:int
     );
 col = FOREACH data GENERATE Firstname, Color;
-filtro = FILTER col BY Color == 'blue' ,'black';
+filtro = FILTER col BY color == 'blue' OR color == 'black';
 result = FOREACH filtro GENERATE CONCAT(firstname, ' ', color);
 
 STORE result INTO 'output' USING PigStorage(',');
