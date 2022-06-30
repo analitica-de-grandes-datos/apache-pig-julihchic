@@ -29,8 +29,7 @@ data = LOAD 'data.csv' USING PigStorage(',')
         Color:chararray,
         Cant:int
     );
-col = FOREACH data GENERATE Firstname, Color;
-filtro = FILTER col BY (Name matches 'K.*') OR (Color matches 'blue');
+filtro = FILTER data BY (Name matches 'K.*') OR (Color matches 'blue');
 result = FOREACH filtro GENERATE Name, Color);
 
 STORE result INTO 'output' USING PigStorage(',');
