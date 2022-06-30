@@ -31,6 +31,7 @@ data = LOAD 'data.csv' USING PigStorage(',')
         Cant:int
     );
 col = FOREACH data GENERATE Color;
-result = FILTER col BY ($0 MATCHES '.*b.*')
+result = FILTER col BY ($0 MATCHES '.*b.*');
+DUMP col;
 
 STORE result INTO 'output' USING PigStorage(',');
