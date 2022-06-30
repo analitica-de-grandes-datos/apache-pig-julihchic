@@ -33,11 +33,8 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-data = LOAD './data.csv' using PigStorage(',') AS (id:int,  name:chararray, lastname:chararray,   date:chararray,  color:chararray, nm:int);
-A = FOREACH data GENERATE date, LOWER(ToString(ToDate(date, 'yyyy-MM-dd', 'America/Bogota),'MM')), ToString(ToDate(date, 'yyyy-MM-dd', '-05:00'),'MM'), GetMonth(ToDate(data));
-B = FOREACH A GENERATE $0, REPLACE ($1, 'apr', 'abr'), $2, $3;
-C = FOREACH B GENERATE $0, REPLACE ($1, 'jan', 'ene'), $2, $3;
-D = FOREACH C GENERATE $0, REPLACE ($1, 'dec', 'dic'), $2, $3;
-E = FOREACH D GENERATE $0, REPLACE ($1, 'aug', 'ago'), $2, $3;
+data = LOAD 'data.csv' USING PigStorage(',') AS (f1:int, f2:chararray, f3:chararray, f4:datetime, f5:chararray, f6:int);
 
-STORE E INTO 'output/' using PigStorage(',');
+fech = FOREACH data GENERATE f4, ToString(f4, 'yyyy-MM-dd') AS fecha;
+result = FOREACH fech GENERATE fecha, REPLACE(REPLACE(REPLACE(REPLACE(LOWER (ToString(f4, 'MMM')), 'apr', 'abr' ), 'dec','dic'), 'aug','ago'),'jan','ene') , SUBSTRING (fecha, 5, 7), SUBSTRING (fecha, 5, 7) AS (mes:int);
+STORE result INTO 'output' USING PigStorage(',');
